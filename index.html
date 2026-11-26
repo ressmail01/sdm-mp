@@ -252,10 +252,8 @@
   </div>
 
   <script>
-    // =========================================================================
-    // PASTE YOUR WORKING GOOGLE APPS SCRIPT /exec URL BELOW
-    // =========================================================================
-    const API_URL = "https://script.google.com/macros/s/AKfycbzHW3p9ZzbGd2y0AzjHLJAV4tJC6MifzfBYvfnhVK02H33p3yS3j65r_d3Pl7fAY7Ey/exec";
+    // Your Google Apps Script Web App URL
+    const API_URL = "https://script.google.com/macros/s/AKfycbxWQyezTe0N_FisEs30hEstFScyM9dBoXuPDwzzP-Qv3pKT01Pzxy7Le2vEwvx0un0V/exec";
 
     document.getElementById("officialHost").textContent = window.location.host || "sdm-madhorajpura-id.vercel.app";
 
@@ -305,14 +303,14 @@
 
     async function verifyCard() {
       const params = new URLSearchParams(window.location.search);
-      const c = params.get("c");
+      const k = params.get("k") || params.get("c");
       const t = params.get("t");
       const v = params.get("v");
       const s = params.get("s");
 
       let queryString = "";
-      if (c) {
-        queryString = `c=${encodeURIComponent(c)}`;
+      if (k) {
+        queryString = `k=${encodeURIComponent(k)}`;
       } else if (t && v && s) {
         queryString = `t=${encodeURIComponent(t)}&v=${encodeURIComponent(v)}&s=${encodeURIComponent(s)}`;
       } else {
