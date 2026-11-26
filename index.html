@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Official ID Verification | SDM Office Madhorajpura</title>
+  <style>
+    :root {
+      --maroon: #7a1432;
+      --maroon-dark: #540c21;
+      --bg: #f1f5f9;
+      --card: #ffffff;
+      --text: #0f172a;
+      --muted: #64748b;
+      --green-bg: #ecfdf5;
+      --green-border: #10b981;
+      --green-text: #065f46;
+      --red-bg: #fef2f2;
+      --red-border: #ef4444;
+      --red-text: #991b1b;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 16px;
+    }
+    .container {
+      width: 100%;
+      max-width: 440px;
+      background: var(--card);
+      border-radius: 16px;
+      box-shadow: 0 12px 32px rgba(15, 23, 42, 0.08);
+      overflow: hidden;
+      border: 1px solid #e2e8f0;
+    }
+    .top-tricolor {
+      height: 4px;
+      background: linear-gradient(90deg, #ff9933 33.3%, #ffffff 33.3%, #ffffff 66.6%, #138808 66.6%);
+    }
+    .header {
+      background: linear-gradient(135deg, var(--maroon), var(--maroon-dark));
+      color: #ffffff;
+      padding: 16px 18px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .emblem-box {
+      flex-shrink: 0;
+      width: 62px;
+      background: #ffffff;
+      border-radius: 10px;
+      padding: 6px 5px 5px;
+      text-align: center;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.18);
+      border: 1.5px solid #fde68a;
+    }
+    .emblem-box img {
+      width: 34px;
+      height: 44px;
+      object-fit: contain;
+      display: block;
+      margin: 0 auto;
+    }
+    .emblem-caption {
+      font-size: 7.5px;
+      font-weight: 800;
+      color: #1e293b;
+      margin-top: 3px;
+      line-height: 1.1;
+    }
+    .header-text {
+      text-align: left;
+      flex: 1;
+    }
+    .header-text .gov {
+      font-size: 10.5px;
+      letter-spacing: 1.3px;
+      text-transform: uppercase;
+      color: #fde68a;
+      font-weight: 700;
+    }
+    .header-text h1 {
+      font-size: 16px;
+      line-height: 1.25;
+      margin-top: 3px;
+      font-weight: 800;
+    }
+    .header-text .sub {
+      font-size: 12px;
+      margin-top: 4px;
+      opacity: 0.92;
+    }
+    .status-banner {
+      padding: 13px 16px;
+      text-align: center;
+      font-weight: 700;
+      font-size: 14.5px;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    .status-loading { background: #f8fafc; color: var(--muted); }
+    .status-valid {
+      background: var(--green-bg);
+      color: var(--green-text);
+      border-bottom: 2px solid var(--green-border);
+    }
+    .status-invalid {
+      background: var(--red-bg);
+      color: var(--red-text);
+      border-bottom: 2px solid var(--red-border);
+    }
+    .live-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 6px;
+      font-size: 11.5px;
+      font-weight: 600;
+      background: rgba(255, 255, 255, 0.9);
+      padding: 3px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+    }
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #10b981;
+      animation: pulse 1.2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.35; transform: scale(0.85); }
+    }
+    .body { padding: 20px 18px; }
+    .photo-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+    .photo-wrap img {
+      width: 128px;
+      height: 156px;
+      object-fit: cover;
+      border-radius: 10px;
+      border: 3px solid var(--maroon);
+      background: #f1f5f9;
+      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.1);
+    }
+    .serial-tag {
+      margin-top: 10px;
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--maroon);
+      background: #fdf2f4;
+      border: 1px solid #f5c2cf;
+      padding: 3px 11px;
+      border-radius: 6px;
+    }
+    .emp-name {
+      margin-top: 10px;
+      font-size: 20px;
+      font-weight: 800;
+      text-align: center;
+    }
+    .emp-desig {
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--maroon);
+      text-align: center;
+      margin-top: 2px;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+    }
+    .grid {
+      border-top: 1px solid #e2e8f0;
+      margin-top: 14px;
+      padding-top: 12px;
+      display: grid;
+      gap: 10px;
+    }
+    .row {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      font-size: 13.5px;
+      border-bottom: 1px dashed #e2e8f0;
+      padding-bottom: 8px;
+    }
+    .row:last-child { border-bottom: none; padding-bottom: 0; }
+    .label { color: var(--muted); font-weight: 600; flex-shrink: 0; }
+    .val { font-weight: 600; text-align: right; color: var(--text); word-break: break-word; }
+    .notice {
+      margin-top: 16px;
+      padding: 10px 12px;
+      background: #f8fafc;
+      border-radius: 8px;
+      border: 1px solid #e2e8f0;
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+    .error-box { text-align: center; padding: 14px 6px; }
+    .error-box p { font-size: 14px; color: var(--text); line-height: 1.6; margin-top: 8px; }
+    .footer {
+      text-align: center;
+      padding: 12px 16px;
+      font-size: 11.5px;
+      color: var(--muted);
+      background: #f8fafc;
+      border-top: 1px solid #e2e8f0;
+    }
+    .footer strong { color: var(--text); }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="top-tricolor"></div>
+    <div class="header">
+      <div class="emblem-box">
+        <img
+          src="https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg"
+          alt="Emblem of India"
+          referrerpolicy="no-referrer"
+        />
+        <div class="emblem-caption">राजस्थान सरकार</div>
+      </div>
+      <div class="header-text">
+        <div class="gov">Government of Rajasthan</div>
+        <h1>Office of the Sub-Divisional Magistrate</h1>
+        <div class="sub">Madhorajpura, District Jaipur &bull; Digital ID Verification</div>
+      </div>
+    </div>
+
+    <div id="statusBanner" class="status-banner status-loading">
+      Verifying cryptographic signature &amp; official record...
+    </div>
+
+    <div id="content" class="body"></div>
+
+    <div class="footer">
+      Always confirm your browser address bar shows:<br />
+      <strong id="officialHost"></strong>
+    </div>
+  </div>
+
+  <script>
+    // =========================================================================
+    // PASTE YOUR GOOGLE APPS SCRIPT /exec DEPLOYMENT LINK ON THE LINE BELOW
+    // =========================================================================
+    const API_URL = "https://script.google.com/macros/s/AKfycbw2DblUuLdsyKVHCU647oAo0vNnIUOEbORaY1UzBUNeGZkB8a6GF0CFS09CauqsHWz7iA/exec";
+
+    document.getElementById("officialHost").textContent = window.location.host || "sdm-madhorajpura-id.vercel.app";
+
+    function startLiveClock() {
+      const el = document.getElementById("liveClock");
+      if (!el) return;
+      const update = () => {
+        el.textContent = new Date().toLocaleString("en-IN", {
+          timeZone: "Asia/Kolkata",
+          day: "2-digit", month: "short", year: "numeric",
+          hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: true
+        }) + " IST";
+      };
+      update();
+      setInterval(update, 1000);
+    }
+
+    function escapeHtml(str) {
+      return String(str || "").replace(/[&<>"']/g, m => ({
+        "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+      }[m]));
+    }
+
+    function handlePhotoError(img) {
+      img.onerror = null;
+      img.src = "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(
+        '<svg xmlns="http://www.w3.org/2000/svg" width="128" height="156">' +
+        '<rect width="100%" height="100%" fill="#f1f5f9"/>' +
+        '<text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#64748b" font-family="sans-serif" font-size="12">Photo Unavailable</text>' +
+        '</svg>'
+      );
+    }
+
+    function renderError(title, message, serial) {
+      const banner = document.getElementById("statusBanner");
+      banner.className = "status-banner status-invalid";
+      banner.innerHTML = `✕ ${escapeHtml(title)}`;
+      document.getElementById("content").innerHTML = `
+        <div class="error-box">
+          ${serial ? `<div class="serial-tag">Card Serial: ${escapeHtml(serial)}</div>` : ""}
+          <p>${escapeHtml(message)}</p>
+          <div class="notice">
+            This verification attempt has been logged. If you suspect a counterfeit or lost card, please contact the Office of the SDM, Madhorajpura (Jaipur).
+          </div>
+        </div>`;
+    }
+
+    async function verifyCard() {
+      const params = new URLSearchParams(window.location.search);
+      const t = params.get("t");
+      const v = params.get("v");
+      const s = params.get("s");
+
+      if (!t || !v || !s) {
+        renderError("NO VALID QR PARAMETERS", "Please scan the official QR code printed on the back of an SDM Office Madhorajpura ID card.");
+        return;
+      }
+
+      try {
+        const res = await fetch(`${API_URL}?t=${encodeURIComponent(t)}&v=${encodeURIComponent(v)}&s=${encodeURIComponent(s)}`);
+        const json = await res.json();
+
+        if (!json.verified) {
+          const titles = {
+            TAMPERED: "TAMPERED / INVALID QR",
+            REVOKED: "CARD REVOKED",
+            SUPERSEDED: "OLD CARD VERSION (INVALID)",
+            EXPIRED: "CARD EXPIRED",
+            NOT_FOUND: "UNRECOGNIZED RECORD"
+          };
+          renderError(titles[json.code] || "VERIFICATION FAILED", json.message, json.cardSerial);
+          return;
+        }
+
+        const d = json.data;
+        const banner = document.getElementById("statusBanner");
+        banner.className = "status-banner status-valid";
+        banner.innerHTML = `
+          ✓ AUTHENTICATED &bull; ACTIVE ID CARD
+          <div><span class="live-pill"><span class="dot"></span> LIVE: <span id="liveClock"></span></span></div>
+        `;
+
+        document.getElementById("content").innerHTML = `
+          <div class="photo-wrap">
+            <img
+              src="${escapeHtml(d.photoUrl)}"
+              alt="Official Employee Photograph"
+              referrerpolicy="no-referrer"
+              onerror="handlePhotoError(this)"
+            />
+            <div class="serial-tag">${escapeHtml(d.cardSerial)} &bull; v${escapeHtml(d.cardVersion)}</div>
+            <div class="emp-name">${escapeHtml(d.name)}</div>
+            <div class="emp-desig">${escapeHtml(d.designation)}</div>
+          </div>
+          <div class="grid">
+            <div class="row"><span class="label">Father's Name</span><span class="val">${escapeHtml(d.fatherName)}</span></div>
+            <div class="row"><span class="label">Employee ID</span><span class="val">${escapeHtml(d.employeeId)}</span></div>
+            <div class="row"><span class="label">Office</span><span class="val">${escapeHtml(d.office)}</span></div>
+            <div class="row"><span class="label">Valid Upto</span><span class="val">${escapeHtml(d.validUpto)}</span></div>
+            ${d.bloodGroup ? `<div class="row"><span class="label">Blood Group</span><span class="val">${escapeHtml(d.bloodGroup)}</span></div>` : ""}
+            ${d.mobile ? `<div class="row"><span class="label">Official Contact</span><span class="val">${escapeHtml(d.mobile)}</span></div>` : ""}
+          </div>
+          <div class="notice">
+            <strong>Visual Verification Check:</strong> Match the official photograph and Card Serial Number (<strong>${escapeHtml(d.cardSerial)}</strong>) displayed above with the physical ID card presented.
+          </div>
+        `;
+        startLiveClock();
+      } catch (err) {
+        renderError("VERIFICATION SERVICE UNAVAILABLE", "Could not reach the official registry. Please check your internet connection and scan again.");
+      }
+    }
+
+    verifyCard();
+  </script>
+</body>
+</html>
