@@ -253,11 +253,11 @@
 
   <script>
     // =========================================================================
-    // PASTE YOUR GOOGLE APPS SCRIPT /exec DEPLOYMENT LINK ON THE LINE BELOW
+    // PASTE YOUR WORKING GOOGLE APPS SCRIPT /exec URL BELOW
     // =========================================================================
-    const API_URL = "https://script.google.com/macros/s/AKfycbw2DblUuLdsyKVHCU647oAo0vNnIUOEbORaY1UzBUNeGZkB8a6GF0CFS09CauqsHWz7iA/exec";
+    const API_URL = "https://script.google.com/macros/s/AKfycbzHW3p9ZzbGd2y0AzjHLJAV4tJC6MifzfBYvfnhVK02H33p3yS3j65r_d3Pl7fAY7Ey/exec";
 
-    document.getElementById("officialHost").textContent = window.location.host || "sdm-madhorajpura-id.vercel.app";
+    document.getElementById("officialHost").textContent = window.location.host || "sdm-mp.vercel.app";
 
     function startLiveClock() {
       const el = document.getElementById("liveClock");
@@ -305,17 +305,23 @@
 
     async function verifyCard() {
       const params = new URLSearchParams(window.location.search);
+      const c = params.get("c");
       const t = params.get("t");
       const v = params.get("v");
       const s = params.get("s");
 
-      if (!t || !v || !s) {
+      let queryString = "";
+      if (c) {
+        queryString = `c=${encodeURIComponent(c)}`;
+      } else if (t && v && s) {
+        queryString = `t=${encodeURIComponent(t)}&v=${encodeURIComponent(v)}&s=${encodeURIComponent(s)}`;
+      } else {
         renderError("NO VALID QR PARAMETERS", "Please scan the official QR code printed on the back of an SDM Office Madhorajpura ID card.");
         return;
       }
 
       try {
-        const res = await fetch(`${API_URL}?t=${encodeURIComponent(t)}&v=${encodeURIComponent(v)}&s=${encodeURIComponent(s)}`);
+        const res = await fetch(`${API_URL}?${queryString}`);
         const json = await res.json();
 
         if (!json.verified) {
